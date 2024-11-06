@@ -1,0 +1,10 @@
+body {
+    width: fit-content;
+    background-color: bisque;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    
+}
+
+.container {
+    background-color: goldenrod;
+}
