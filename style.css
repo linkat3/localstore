@@ -27,3 +27,11 @@ body {
     transition: opacity 10s ease-in-out; /* Transición de opacidad en 10 segundo */
   
 }
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 2px 2px;
+    cursor: pointer;
+}

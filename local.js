@@ -27,6 +27,7 @@ function guardarMensaje() {
         // El mensaje ya existe
         capaError.textContent = "Este mensaje ya existe.";
         capaError.style.opacity = 1; // Mostrar el mensaje
+        capaError.style.backgroundColor = "yellow";
 
         // Ocultar el mensaje después de 3 segundos (ajusta el tiempo según sea necesario)
         setTimeout(() => {
@@ -59,15 +60,15 @@ function mostrarMensajes() {
     tweets.forEach(mensaje => {
         const liMensaje = document.createElement('li');
         liMensaje.textContent = mensaje.texto;
-        listaMensajes.appendChild(liMensaje);
 
-        // Boton de borrar
-        const miBoton = document.createElement('button');
-        miBoton.textContent = 'X';
-        miBoton.classList.add('delete-button');
-        miBoton.style.marginLeft = '1rem';
-        miBoton.dataset.id = mensaje.id;
-        miBoton.addEventListener('click', borrarMensaje);
+        const botonBorrar = document.createElement('button');
+        botonBorrar.textContent = 'x';
+        botonBorrar.classList.add('delete-button'); // Agregar una clase CSS para estilos
+        botonBorrar.dataset.id = mensaje.id;
+        botonBorrar.addEventListener('click', borrarMensaje);
+
+        liMensaje.appendChild(botonBorrar); // Agregar el botón al elemento li
+        listaMensajes.appendChild(liMensaje);
     });
 
 
@@ -87,4 +88,3 @@ function borrarMensaje(event) {
 
 
 }
-
