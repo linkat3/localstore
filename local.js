@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', mostrarMensajes);
 
 let capaError = document.getElementById("capaError");
-// const DOMmensaje = document.querySelector('#mensajes');
+
 
 function guardarMensaje() {
     const mensajeInput = document.getElementById('mensajeInput');
@@ -13,11 +13,10 @@ function guardarMensaje() {
         capaError.style.opacity = 1; // Mostrar el mensaje inmediatamente
 
         setTimeout(() => {
-            capaError.style.opacity = 0; // Ocultar el mensaje después de 10 segundos
-        }, 10000);
+            capaError.style.opacity = 0; // Ocultar el mensaje después de 5 segundos
+        }, 5000);
         return;
-        /*alert('Por favor, introduce un mensaje.');
-        return;*/
+
     }
 
     const tweets = JSON.parse(localStorage.getItem('tweets')) || [];
@@ -29,17 +28,17 @@ function guardarMensaje() {
         capaError.style.opacity = 1; // Mostrar el mensaje
         capaError.style.backgroundColor = "yellow";
 
-        // Ocultar el mensaje después de 3 segundos (ajusta el tiempo según sea necesario)
+        // Ocultar el mensaje después de 5 segundos (ajusta el tiempo según sea necesario)
         setTimeout(() => {
             capaError.style.opacity = 0;
-        }, 3000);
+        }, 5000);
         return;
-    }
-
+    }    
     const tweetObj = {
         id: Date.now(),
         texto: mensaje
     };
+
     tweets.push(tweetObj);
     localStorage.setItem('tweets', JSON.stringify(tweets));
 
@@ -55,7 +54,7 @@ function mostrarMensajes() {
 
     // Verificamos duplicados antes del ciclo
     const mensajeInput = document.getElementById('mensajeInput');
-    const nuevoMensaje = mensajeInput.value.trim(); // Obtenemos el nuevo mensaje
+    const nuevoMensaje = mensajeInput.value.trim(); // Obtenemos el nuevo mensaje// Obtenemos el nuevo mensaje
 
     tweets.forEach(mensaje => {
         const liMensaje = document.createElement('li');
@@ -70,21 +69,24 @@ function mostrarMensajes() {
         liMensaje.appendChild(botonBorrar); // Agregar el botón al elemento li
         listaMensajes.appendChild(liMensaje);
     });
-
-
-
-    // listaMensajes.appendChild(liMensaje);
 }
 
-
 function borrarMensaje(event) {
-    // Obtenemos el producto ID que hay en el boton pulsado
+    // Obtenemos el id del mensaje a eliminar
     const idMensaje = event.target.dataset.id;
-    const tweets = JSON.parse(localStorage.getItem('tweets')) || [];
-    // Filtramos los mensajes para eliminar el que coincida con el id
-    const nuevosTweets = tweets.filter(tweet => tweet.id !== idMensaje);
-    localStorage.setItem('tweets', JSON.stringify(nuevosTweets));
-    mostrarMensajes(); // Actualizamos la lista
 
+    // Mostrar un mensaje de confirmación
+    if (confirm('¿Estás seguro de que deseas eliminar este mensaje?')) {
+        // Filtramos los tweets para eliminar el que coincide con el id
+        const tweets = JSON.parse(localStorage.getItem('tweets')) || [];
+        const nuevosTweets = tweets.filter(tweet => tweet.id !== idMensaje);
 
+        localStorage.setItem('tweets', JSON.stringify(nuevosTweets));
+
+        // Encontrar el elemento li a eliminar en el DOM (opcional, para mayor eficiencia)
+        const liEliminar = document.querySelector(`li button[data-id="${idMensaje}"]`).parentNode;
+        console.log(liEliminar);
+        liEliminar.remove();
+    }
+   // mostrarMensajes();
 }
